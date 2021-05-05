@@ -50,9 +50,9 @@ COOKIES_ENABLED = False
 """默认请求头，上面写了一个USER_AGENT，其实这个东西就是放在请求头里面的，这个东西可以根据你爬取的内容做相应设置。"""
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'crawl.middlewares.CrawlSpiderMiddleware': 543,
-#}
+SPIDER_MIDDLEWARES = {
+    'crawl.middlewares.CrawlDownloaderMiddleware': 543,
+}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html

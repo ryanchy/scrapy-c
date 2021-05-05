@@ -1,3 +1,3 @@
-import cmdline
+from scrapy.cmdline import execute
 
-cmdline.command("scrapy crawl demo")
+execute("scrapy crawl yg".split())
