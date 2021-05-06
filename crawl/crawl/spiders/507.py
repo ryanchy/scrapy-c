@@ -1,5 +1,5 @@
 import scrapy, random
-
+from crawl.items import YgItem
 
 class YgSpider(scrapy.Spider):
     USER_AGENT_LIST = [
@@ -23,8 +23,8 @@ class YgSpider(scrapy.Spider):
         "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"
     ]
     name = 'yg'
-    allowed_domains = ['www.016pa.com']
-    start_urls = ['https://www.016pa.com/']
+    allowed_domains = ['www.026pa.com']
+    start_urls = ['https://www.026pa.com/']
     header_str = """:authority: www.016pa.com
                 :method: GET
                 :path: /
@@ -51,5 +51,25 @@ class YgSpider(scrapy.Spider):
             yield scrapy.Request(url, headers=self.headers, callback=self.parse)
         print("ok")
     def parse(self, response):
-        print(response.xpath("//li/a['.h1d42e5qqxb']/text()").extract())
-        print(response.xpath("//li/a['.h1d42e5qqxb']").css("a::attr(href)").extract())
+
+        item = YgItem()
+        class_list = response.xpath("//ul/li/a/text()").extract()
+        class_url_list = response.xpath("//li/a").css("a::attr(href)").extract()
+        # print(class_list)
+        # print(class_url_list)
+        # print(len(class_url_list))
+        i = 0
+        while i < len(class_url_list):
+            print(class_list[i], class_list[:])
+
+            if class_list[i] in class_list:
+
+                print(class_list[i])
+                item["Yclass"] = class_list[i]
+                print(item["Yclass"])
+            i += 1
+                # yield scrapy.Request(url="https://www.016pa.com{}".format(class_url_list(i)), callback=self.detil_parse)
+    # def detil_parse(self, response):
+    #     print(response.xpath("//title/text()"))
+    #     print(response.headers)
+    #     pass

@@ -94,8 +94,15 @@ class CrawlDownloaderMiddleware:
         # middleware.
         # if spider.name == spider.name:
             #user-agent不变其他换成具体网页的
-        header_str = """
-            :authority: www.016pa.com
+        header_str = """content-encoding: gzip
+            content-type: text/html
+            date: Thu, 06 May 2021 15:33:36 GMT
+            etag: W/"6092c35d-6298"
+            last-modified: Wed, 05 May 2021 16:10:05 GMT
+            server: nginx
+            strict-transport-security: max-age=31536000; includeSubdomains;
+            vary: Accept-Encoding
+            :authority: 019pa.com
             :method: GET
             :path: /
             :scheme: https
@@ -103,7 +110,7 @@ class CrawlDownloaderMiddleware:
             accept-encoding: gzip, deflate, br
             accept-language: zh-CN,zh;q=0.9
             cache-control: max-age=0
-            cookie: guid=781e142d56932d9f31eda65f17fa8201; HstCfa4166711=1620233401695; HstCla4166711=1620233401695; HstCmu4166711=1620233401695; HstPn4166711=1; HstPt4166711=1; HstCnv4166711=1; HstCns4166711=1; c_ref_4166711=https%3A%2F%2Fwww.002pa.com%2F; __dtsu=104016197206910740FB9B6CE6EAFC5A
+            cookie: __dtsu=104016197206910740FB9B6CE6EAFC5A; guid=9ba75433602b123a3d7af9d715eb7c8e; HstCfa4166711=1620315147166; HstCmu4166711=1620315147166; HstCnv4166711=1; HstCns4166711=1; c_ref_4166711=https%3A%2F%2Fwww.016pa.com%2F; HstCla4166711=1620315169929; HstPn4166711=2; HstPt4166711=2
             if-modified-since: Wed, 05 May 2021 16:10:05 GMT
             if-none-match: W/"6092c35d-6298"
             sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"
@@ -113,12 +120,12 @@ class CrawlDownloaderMiddleware:
             sec-fetch-site: cross-site
             sec-fetch-user: ?1
             upgrade-insecure-requests: 1
-            user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36
+            user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36indows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36
             """
         headers = dict([line.split(": ", 1) for line in """{}""".format(header_str).split("\n")])
         headers["user-agent"] = random.choice(USER_AGENT_LIST)
-        print(headers)
         request.headers = Headers(headers)
+        print("middleware success")
 
         # Must either:
         # - return None: continue processing this request
