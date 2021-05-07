@@ -94,7 +94,8 @@ class CrawlDownloaderMiddleware:
         # middleware.
         # if spider.name == spider.name:
             #user-agent不变其他换成具体网页的
-        header_str = """content-encoding: gzip
+        header_str = """
+            content-encoding: gzip
             content-type: text/html
             date: Thu, 06 May 2021 15:33:36 GMT
             etag: W/"6092c35d-6298"
@@ -122,10 +123,11 @@ class CrawlDownloaderMiddleware:
             upgrade-insecure-requests: 1
             user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36indows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36
             """
-        headers = dict([line.split(": ", 1) for line in """{}""".format(header_str).split("\n")])
+        headers = dict([line.split(": ", 1) for line in """{}""".format(header_str.strip()).split("\n")])
         headers["user-agent"] = random.choice(USER_AGENT_LIST)
         request.headers = Headers(headers)
-        print("middleware success")
+
+
 
         # Must either:
         # - return None: continue processing this request

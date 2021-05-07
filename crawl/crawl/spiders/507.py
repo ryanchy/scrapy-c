@@ -23,8 +23,8 @@ class YgSpider(scrapy.Spider):
         "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"
     ]
     name = 'yg'
-    allowed_domains = ['www.026pa.com']
-    start_urls = ['https://www.026pa.com/']
+    allowed_domains = ['www.032pa.com']
+    start_urls = ['https://www.032pa.com/']
     header_str = """:authority: www.016pa.com
                 :method: GET
                 :path: /
@@ -59,17 +59,12 @@ class YgSpider(scrapy.Spider):
         # print(class_url_list)
         # print(len(class_url_list))
         i = 0
-        while i < len(class_url_list):
-            print(class_list[i], class_list[:])
-
-            if class_list[i] in class_list:
-
-                print(class_list[i])
-                item["Yclass"] = class_list[i]
-                print(item["Yclass"])
-            i += 1
-                # yield scrapy.Request(url="https://www.016pa.com{}".format(class_url_list(i)), callback=self.detil_parse)
-    # def detil_parse(self, response):
-    #     print(response.xpath("//title/text()"))
-    #     print(response.headers)
-    #     pass
+        for i in range(len(class_url_list)):
+            item["yclass"] = class_list[i]
+            print(item["yclass"])
+            print(class_url_list[i])
+            yield scrapy.Request(url="https://www.032pa.com{}".format(class_url_list[i]), callback=self.detil_parse)
+    def detil_parse(self, response):
+        print(response.xpath("//title/text()").extract())
+        print(response.headers)
+        print(response.headers)
