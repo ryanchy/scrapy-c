@@ -1,5 +1,6 @@
 import scrapy, random
 from crawl.items import YgItem
+import re
 
 class YgSpider(scrapy.Spider):
     USER_AGENT_LIST = [
@@ -63,8 +64,12 @@ class YgSpider(scrapy.Spider):
             item["yclass"] = class_list[i]
             print(item["yclass"])
             print(class_url_list[i])
-            yield scrapy.Request(url="https://www.032pa.com{}".format(class_url_list[i]), callback=self.detil_parse)
-    def detil_parse(self, response):
-        print(response.xpath("//title/text()").extract())
-        print(response.headers)
-        print(response.headers)
+            yield scrapy.Request(url="https://www.032pa.com{}".format(class_url_list[i]), meta={"item":item}, callback=self.class_parse)
+    def class_parse(self, response):
+        item = response.meta["item"]
+        pageend = response.xpath("//ul/font/a").extract()[-1]
+        print(pageend)
+        abc =re.compile("Html")
+        print(abc)
+        ab = abc.search(pageend).group()
+        print(ab)
