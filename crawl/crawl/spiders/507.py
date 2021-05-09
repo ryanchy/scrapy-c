@@ -60,16 +60,37 @@ class YgSpider(scrapy.Spider):
         # print(class_url_list)
         # print(len(class_url_list))
         i = 0
-        for i in range(len(class_url_list)):
+        for i in (3,2):
             item["yclass"] = class_list[i]
-            print(item["yclass"])
+
             print(class_url_list[i])
             yield scrapy.Request(url="https://www.032pa.com{}".format(class_url_list[i]), meta={"item":item}, callback=self.class_parse)
     def class_parse(self, response):
         item = response.meta["item"]
-        pageend = response.xpath("//ul/font/a").extract()[-1]
+        print(item)pageend = response.xpath("//ul/font/a").extract()[-1]
         print(pageend)
-        abc =re.compile("Html")
-        print(abc)
-        ab = abc.search(pageend).group()
-        print(ab)
+        abc =re.compile(r".*index-(\d*)", re.S)
+        ab = abc.findall(pageend)
+        # for j in range(1, int(ab[0])):
+        for j in range(1, 4):
+
+            item["ypage"] = j
+            print(item)
+            print(response.url+"index-{}.html".format(j))
+            yield scrapy.Request(url=response.url+"index-{}.html".format(j), meta={"item":item}, callback=self.page_parse)
+    #
+    #
+    def page_parse(self, response):
+        item = response.meta["item"]
+        print(item)
+        # videos = response.xpath("//section/div/div/div/div/div/a").css("[target]").extract()
+        # # for e in videos:
+        # # print(videos.xpath("//div/div/a").css("[target='_blank']").css("[href]").extract())
+        # videos_list = []
+        # for x in videos:
+        #     videos_list.append(re.findall(r"(Html.*?html)", x, re.M)[0])
+        # print(videos_list,item["ypage"])
+            # print(videos_urls)
+        # for v in videos:
+        #     video_url = v.xpass("//a").extract_first()
+        #     print(video_url)

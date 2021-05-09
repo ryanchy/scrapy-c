@@ -17,4 +17,6 @@ class YgItem(scrapy.Item):
     yname = scrapy.Field()
     #下载地址
     yurl = scrapy.Field()
+    #影片类别
+    ytype = scrapy.Field()
     pass
